@@ -1,0 +1,564 @@
+-- phpMyAdmin SQL Dump
+-- version 2.11.6
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Jan 12, 2009 at 03:49 PM
+-- Server version: 5.0.51
+-- PHP Version: 5.2.6
+
+DROP DATABASE IF EXISTS AMxxxx2;
+create database AMxxxx2 
+CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+
+use AMxxxx2
+
+--
+-- Database: `AMxxxx2`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `belong`
+--
+
+CREATE TABLE `belong` (
+  `ID` int(11) NOT NULL,
+  `ISBN` char(13) NOT NULL,
+  PRIMARY KEY  (`ID`,`ISBN`),
+  KEY `ISBN` (`ISBN`)
+) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+--
+-- Dumping data for table `belong`
+--
+
+INSERT INTO `belong` (`ID`, `ISBN`) VALUES
+(56, '0141189207445'),
+(23, '0141403257445'),
+(12, '0192834177425'),
+(23, '0200006994885'),
+(456, '0234567890136'),
+(56, '0521316928985'),
+(979, '063752489345'),
+(10, '0960431964793'),
+(116621, '0960536206631'),
+(45, '0960835099954'),
+(45, '9780060722302'),
+(12, '9780141028736'),
+(33, '9780195062052'),
+(1177, '9780198244387'),
+(12, '9780199535897'),
+(49, '9780415141444'),
+(33, '9781402209222'),
+(1188, '9781407302898'),
+(1188, '9781901992298'),
+(978, '9789600313925'),
+(23, '9789600434118'),
+(12, '9789600438307'),
+(56, '9789601414843'),
+(11661, '9789601619422'),
+(70, '9789602092743'),
+(91, '9789602096895'),
+(70, '9789602099247'),
+(88, '9789604180646'),
+(11661, '9789604264346'),
+(116621, '9789604362165'),
+(116622, '9789604380718'),
+(99, '9789607018199'),
+(456, '9789607666666'),
+(567, '9789607666666'),
+(116622, '9789608144422'),
+(66, '9789608250000'),
+(10, '9789608250031'),
+(99, '9789608533448'),
+(978, '9789608723269'),
+(99, '9789608798212');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `book`
+--
+
+CREATE TABLE `book` (
+  `ISBN` char(13) NOT NULL,
+  `Title` varchar(90) NOT NULL,
+  `NumOfCopies` int(11) unsigned default '1',
+  `Cover` varchar(255) NOT NULL,
+  `Outline` varchar(255) NOT NULL,
+  `Publisher` varchar(60) NOT NULL,
+  PRIMARY KEY  (`ISBN`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `book`
+--
+
+INSERT INTO `book` (`ISBN`, `Title`, `NumOfCopies`, `Cover`, `Outline`, `Publisher`) VALUES
+('0141189207445', 'Love in the Time of Cholera', 1, '', '', 'Penguin Books Ltd'),
+('0141403257445', 'Living to Tell the Tale', 3, '', '', 'Penguin Books Ltd'),
+('0192834177425', 'The Tragedy of Macbeth', 5, '', '', 'Oxford University Press'),
+('0200006994885', 'Ta Mitata tis Kritis', 1, '', '', 'Papasotiriou'),
+('0234567890136', 'Kws,mia poli sti logotexnia', 4, '', '', 'Metaixmio'),
+('0521316928985', 'One Hundred Years of Solitude', 6, '', '', 'Cambridge University Press'),
+('063752489345', 'Dokimia gia tin Paidiki Logotexnia', 2, '', '', 'Penguin Books Ltd'),
+('0960431964793', 'Mathimatiki Analisi', 6, '', '', 'Ziti'),
+('0960536206631', 'O mistiriodis thanatos tou Megalou Aleksandrou', 2, '', '', 'Enalios'),
+('0960835099954', 'Stradivarius', 3, '', '', 'Potamos'),
+('9780060722302', 'Nixon and Kissinger', 1, '', '', 'HarperCollins Publishers Inc'),
+('9780141028736', 'Memories of My Melancholy Whores', 1, '', '', 'Penguin Books Ltd'),
+('9780195062052', 'The American Style of Foreign Policy', 1, '', '', 'Oxford University Press'),
+('9780198244387', 'Writings on Logic and Metaphysics', 2, '', '', 'OXFORD UNIVERSITY PRESS'),
+('9780199535897', 'Romeo and Juliet', 3, '', '', 'Oxford University Press'),
+('9780415141444', 'Dictionary of Lexicography', 2, '', '', 'Taylor & Francis Ltd'),
+('9781402209222', 'Let Every Nation Know', 2, '', '', 'Sourcebooks MediaFusion'),
+('9781407302898', 'Canoes of the Grand Ocean', 2, '', '', 'British Archaeological Reports'),
+('9781901992298', 'Researc Framework for London Archaeology', 3, '', '', 'Museum of London Archaeology Service'),
+('9789600313925', 'Proseggiseis stin Paidiki Logotexnia', 3, '', '', 'Kastanioti'),
+('9789600434118', 'Mia zwi Duo zwes', 3, '', '', 'Kedros'),
+('9789600438307', 'Oi alithies twn allwn', 4, '', '', 'Kedros'),
+('9789601414843', 'H magissa tou Portompelo', 3, '', '', 'Libanis'),
+('9789601619422', 'Aousvitch', 2, '', '', 'Patakis'),
+('9789602092743', 'H arxikektoniki twn upologistwn', 3, '', '', 'Kleidaruthmos'),
+('9789602096895', 'Diktua Ypologistwn ', 6, '', '', 'Papasotiriou'),
+('9789602099247', 'Katanemimena Sistimata', 4, '', '', 'Kleidaruthmos'),
+('9789602180181', 'H autokratoria twn automatwn', 2, '', '', 'Kritiki'),
+('9789604180646', 'Anaptiksi WEB efarmogwn me ASP.NET kai VBASIC', 4, '', '', 'Tziolas'),
+('9789604264346', 'To olisthima tou Churchill', 3, '', '', 'Iwlkos'),
+('9789604362165', 'Polemistes tis Arxaias Elladas', 4, '', '', ''),
+('9789604380718', 'Mikra Asia,taksidi stin istoria tis', 2, '', '', 'Periplous'),
+('9789607018199', 'Efarmogi twn empeirwn sistimatwn', 3, '', '', 'Papasotiriou'),
+('9789607666666', 'Logos eis Nikon Gabrihl Petziki', 1, '', '', 'Mugdonia'),
+('9789608144422', 'To Makedoniko Zitima', 4, '', '', ''),
+('9789608250000', 'Mathimata Statistikis', 5, '', '', 'SPIN'),
+('9789608250031', 'Mathimata Thewrias Pithanotitwn', 4, '', '', 'SPIN'),
+('9789608533448', 'Sugxrona Leitourgika Sistimata', 4, '', '', 'Papasotiriou'),
+('9789608723269', 'Terpseis kai Hmeres anagnwsis', 2, '', '', 'Ekdoseis Sxolis I.M.Panagiwtopoulou'),
+('9789608798212', 'Sxediasmos kai Leitourgia Pliroforiakwn Sistimatwn', 6, '', '', 'StratIs');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `borrower`
+--
+
+CREATE TABLE `borrower` (
+  `AT` varchar(8) NOT NULL,
+  `registrationDate` date NOT NULL,
+  `Br_Type` set('Melos DEP','Foithths','Ereunhths') NOT NULL default 'Foithths',
+  `Active` set('NAI','OXI') NOT NULL default 'NAI',
+  PRIMARY KEY  (`AT`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `borrower`
+--
+
+INSERT INTO `borrower` (`AT`, `registrationDate`, `Br_Type`, `Active`) VALUES
+('A786543', '2007-11-14', 'Foithths', 'NAI'),
+('E433982', '2006-04-10', 'Melos DEP', 'NAI'),
+('M512776', '2008-09-05', 'Ereunhths', 'NAI'),
+('S976543', '2005-02-10', 'Foithths', 'NAI'),
+('T654322', '2004-09-18', 'Foithths', 'NAI'),
+('X328976', '2007-08-12', 'Ereunhths', 'NAI'),
+('Z124533', '2007-08-28', 'Foithths', 'NAI');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category`
+--
+
+CREATE TABLE `category` (
+  `ID` int(11) NOT NULL auto_increment,
+  `Title` varchar(60) NOT NULL,
+  `HyperCategory` int(11) default NULL,
+  PRIMARY KEY  (`ID`),
+  KEY `Hyper_idx` (`HyperCategory`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`ID`, `Title`, `HyperCategory`) VALUES
+(10, 'PITHANOTHTES', 89),
+(12, 'MYTHISTORHMATA', NULL),
+(19, 'PROGRAMMATISMOS', 70),
+(23, 'ISTORIKA MYTHISTORHMATA', 12),
+(33, 'POLITIKA DOKIMIA', NULL),
+(45, 'BIOGRAFIES', NULL),
+(49, 'LEKSIKA', NULL),
+(56, 'AISTHHMATIKA MYTHISTORHMATA', 12),
+(66, 'STATISTIKH', 89),
+(70, 'PLHROFORIKH', NULL),
+(88, 'WEB', 70),
+(89, 'THETIKES EPISTHMES', NULL),
+(91, 'DIKTYA', 70),
+(99, 'PLHROFORIAKA SYSTHMATA', 70),
+(456, 'LOGOTEXNIA', NULL),
+(567, 'LOGOTEXNIKES MELETES', 456),
+(789, 'MELETES PAIDIKHS LOGOTEXNIAS', 567),
+(978, 'MELETES ELLHNIKHS PAIDIKHS LOGOTEXNIAS', 789),
+(979, 'MELETES KSENHS PAIDIKHS LOGOTEXNIAS', 789),
+(1166, 'ISTORIA', 3234),
+(1177, 'FILOSOFIA', 3234),
+(1188, 'ARXAIOLOGIA', 3234),
+(3234, 'ANTHRWPISTIKES EPISTHMES', NULL),
+(11661, 'PAGKOSMIA ISTORIA', 1166),
+(11662, 'EELHNIKH ISTORIA', 1166),
+(116621, 'ARXAIA ELLHNIKH ISTORIA', 11662),
+(116622, 'NEOTERH ELLHNIKH ISTORIA', 11662);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lending`
+--
+
+CREATE TABLE `lending` (
+  `ID` int(11) NOT NULL auto_increment,
+  `lendingDate` date NOT NULL,
+  `returningDate` date default NULL,
+  `librarian` varchar(8) NOT NULL,
+  `Borrower` varchar(8) NOT NULL,
+  PRIMARY KEY  (`ID`),
+  KEY `librarian_idx` (`librarian`),
+  KEY `Borrower_idx` (`Borrower`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `lending`
+--
+
+INSERT INTO `lending` (`ID`, `lendingDate`, `returningDate`, `librarian`, `Borrower`) VALUES
+(1, '2008-11-28', '2008-12-17', 'B329087', 'A786543'),
+(2, '2008-11-04', '2008-11-30', 'E722654', 'A786543'),
+(3, '2008-11-27', '2009-01-13', 'P734007', 'A786543'),
+(4, '2008-11-24', '2008-11-30', 'K893417', 'A786543'),
+(5, '2008-11-29', '2008-12-10', 'E722654', 'E433982'),
+(6, '2008-11-11', '2008-11-30', 'B329087', 'E433982'),
+(7, '2008-11-30', '2009-01-15', 'P734007', 'S976543'),
+(8, '2008-11-28', '2009-01-06', 'P734007', 'X328976'),
+(9, '2008-12-11', '2009-02-27', 'X188263', 'M512776'),
+(10, '2008-11-28', '2009-01-13', 'K893417', 'T654322'),
+(11, '2008-11-29', '2009-01-07', 'X887543', 'T654322'),
+(12, '2008-11-07', '2008-11-29', 'X188263', 'T654322');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `librarian`
+--
+
+CREATE TABLE `librarian` (
+  `AT` varchar(8) NOT NULL,
+  `HiringDate` datetime NOT NULL,
+  PRIMARY KEY  (`AT`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `librarian`
+--
+
+INSERT INTO `librarian` (`AT`, `HiringDate`) VALUES
+('B329087', '1999-03-09 23:14:44'),
+('E722654', '1996-11-14 12:15:08'),
+('K893417', '2006-07-13 14:23:45'),
+('P734007', '2008-11-11 23:16:49'),
+('T312987', '2004-02-09 11:11:56'),
+('X188263', '2007-09-29 21:54:12'),
+('X887543', '2008-12-24 13:18:49');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `participate`
+--
+
+CREATE TABLE `participate` (
+  `ID` int(11) NOT NULL,
+  `ISBN` char(13) NOT NULL,
+  PRIMARY KEY  (`ID`,`ISBN`),
+  KEY `ISBN` (`ISBN`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `participate`
+--
+
+INSERT INTO `participate` (`ID`, `ISBN`) VALUES
+(1, '0141189207445'),
+(1, '0141403257445'),
+(7, '063752489345'),
+(4, '0960536206631'),
+(9, '0960835099954'),
+(5, '9780141028736'),
+(9, '9780199535897'),
+(5, '9780415141444'),
+(9, '9781402209222'),
+(5, '9781901992298'),
+(12, '9781901992298'),
+(4, '9789600313925'),
+(5, '9789600438307'),
+(12, '9789601414843'),
+(8, '9789601619422'),
+(2, '9789602096895'),
+(6, '9789602096895'),
+(3, '9789602180181'),
+(7, '9789604180646'),
+(11, '9789604362165'),
+(8, '9789607018199'),
+(12, '9789608144422'),
+(8, '9789608250000'),
+(12, '9789608533448'),
+(10, '9789608798212');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `person`
+--
+
+CREATE TABLE `person` (
+  `AT` varchar(8) NOT NULL,
+  `Name` varchar(25) NOT NULL,
+  `Surname` varchar(25) NOT NULL,
+  `Birthdate` date NOT NULL,
+  PRIMARY KEY  (`AT`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `person`
+--
+
+INSERT INTO `person` (`AT`, `Name`, `Surname`, `Birthdate`) VALUES
+('A786543', 'Eirini', 'Eleftheriou', '1983-11-14'),
+('B329087', 'Dimitra', 'Iwannou', '1984-04-10'),
+('E433982', 'Aristeidis', 'Fragkoulis', '1965-08-28'),
+('E722654', 'Kwnstantinos', 'Sarantis', '1994-09-05'),
+('K893417', 'Euaggelos', 'Prwtopappas', '1984-09-18'),
+('M512776', 'Gewrgios', 'Oikonomopoulos', '1982-08-12'),
+('P734007', 'Lamprini', 'Peristeri', '1981-11-14'),
+('S976543', 'Basiliki', 'Eutaksia', '1985-04-10'),
+('T312987', 'Nikos', 'Lamprou', '1985-08-28'),
+('T654322', 'Maria', 'Bergopoulou', '1965-09-05'),
+('X188263', 'Stefania', 'Meliggiwti', '1982-02-10'),
+('X328976', 'Paraskeui', 'Triantafullaki', '1986-09-18'),
+('X887543', 'Aggeliki', 'Paraskeuopoulou', '1980-08-12'),
+('Z124533', 'Basileios', 'Zarokwstas', '1979-02-10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `phones`
+--
+
+CREATE TABLE `phones` (
+  `AT` varchar(8) NOT NULL,
+  `Number` varchar(10) NOT NULL,
+  `Ph_Type` set('Kinhto','Stathero','fax','Grafeio','Oikia') NOT NULL,
+  PRIMARY KEY  (`AT`,`Number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `phones`
+--
+
+INSERT INTO `phones` (`AT`, `Number`, `Ph_Type`) VALUES
+('A786543', '2106351826', 'Grafeio'),
+('A786543', '2610762351', 'Stathero'),
+('A786543', '6971234567', 'Kinhto'),
+('B329087', '2106531823', 'Stathero'),
+('E433982', '6992651872', 'Kinhto'),
+('E722654', '2610342817', 'Stathero'),
+('E722654', '2610987622', 'fax'),
+('E722654', '2610992132', 'Grafeio'),
+('E722654', '6992781265', 'Kinhto'),
+('P734007', '6937123376', 'Stathero'),
+('T312987', '2610234718', 'fax'),
+('T312987', '2610672135', 'Grafeio'),
+('X188263', '2610632187', 'Stathero'),
+('X188263', '2610982322', 'fax'),
+('X188263', '6944321654', 'Kinhto'),
+('X328976', '2625098654', 'Stathero'),
+('X887543', '6977123987', 'Kinhto'),
+('Z124533', '2310567123', 'Kinhto');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `writer`
+--
+
+CREATE TABLE `writer` (
+  `ID` int(11) NOT NULL auto_increment,
+  `Name` varchar(25) NOT NULL,
+  `Surname` varchar(25) NOT NULL,
+  `Nickname` varchar(25) NOT NULL,
+  `CV` varchar(255) NOT NULL,
+  PRIMARY KEY  (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `writer`
+--
+
+INSERT INTO `writer` (`ID`, `Name`, `Surname`, `Nickname`, `CV`) VALUES
+(110, 'Rudyard', 'Kipling', '', ''),
+(111, 'William', 'Shakespeare', '', ''),
+(123, 'Robert ', 'Dallek ', '', ''),
+(222, 'Andrew ', 'Tanenbaum', '', ''),
+(234, 'Pinelopi', 'Delta', '', ''),
+(332, 'Nick', 'Reinhard ', '', ''),
+(345, 'Nikos', 'Ksanthoulis', '', ''),
+(421, 'Giannis', 'Garoutsos', '', ''),
+(456, 'Marianna', 'Papadopoulou', 'Mari', ''),
+(521, 'Thanasis', 'Ksenos', '', ''),
+(567, 'Faber', 'Toby', '', ''),
+(666, 'Paulo', 'Coelh', '', ''),
+(678, 'Nikos', 'Dimitriadis', '', ''),
+(770, 'Kevin Lane', 'Keller', '', ''),
+(888, 'Gabriel Garcia ', 'Marquez', '', ''),
+(987, 'Nikos', 'Themelis', '', ''),
+(999, 'Giannis', 'Rarmakezis', '', ''),
+(1229, 'Anthony', 'Rogers', '', ''),
+(1887, 'Laurence', 'Rees', '', ''),
+(3366, 'Aleksandros', 'Kosmatopoulos', '', ''),
+(5590, 'Frederic', 'Brown', '', ''),
+(5991, 'Thomas', 'Bradley', '', ''),
+(6243, 'Panagiwtis', 'Noutsos', '', ''),
+(6512, 'Taryn', 'Nixon', '', ''),
+(7734, 'Tzina', 'Kalogirou', '', ''),
+(8722, 'Anne', 'Di Piazza', '', ''),
+(8743, 'Hraklis', 'Kallergis', '', ''),
+(9997, 'David', 'Laber', '', ''),
+(11876, 'Manousos', 'Kampouris', '', ''),
+(13324, 'Paul', 'Doherty', '', ''),
+(40712, 'John', 'Freely', '', ''),
+(61082, 'Gewrgios ', 'Lois', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `writes`
+--
+
+CREATE TABLE `writes` (
+  `ID` int(11) NOT NULL,
+  `ISBN` char(13) NOT NULL,
+  PRIMARY KEY  (`ID`,`ISBN`),
+  KEY `ISBN` (`ISBN`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `writes`
+--
+
+INSERT INTO `writes` (`ID`, `ISBN`) VALUES
+(888, '0141189207445'),
+(888, '0141403257445'),
+(111, '0192834177425'),
+(999, '0200006994885'),
+(6243, '0234567890136'),
+(123, '0521316928985'),
+(888, '0521316928985'),
+(999, '0521316928985'),
+(9997, '0521316928985'),
+(9997, '063752489345'),
+(521, '0960431964793'),
+(123, '0960536206631'),
+(567, '0960536206631'),
+(13324, '0960536206631'),
+(567, '0960835099954'),
+(123, '9780060722302'),
+(888, '9780141028736'),
+(123, '9780195062052'),
+(5991, '9780198244387'),
+(111, '9780199535897'),
+(332, '9780415141444'),
+(123, '9781402209222'),
+(6512, '9781407302898'),
+(8722, '9781901992298'),
+(8743, '9789600313925'),
+(987, '9789600434118'),
+(666, '9789600438307'),
+(987, '9789600438307'),
+(666, '9789601414843'),
+(1229, '9789601619422'),
+(222, '9789602092743'),
+(222, '9789602096895'),
+(222, '9789602099247'),
+(5590, '9789602180181'),
+(678, '9789604180646'),
+(1887, '9789604264346'),
+(11876, '9789604362165'),
+(61082, '9789604380718'),
+(999, '9789607018199'),
+(3366, '9789607666666'),
+(40712, '9789608144422'),
+(421, '9789608250000'),
+(421, '9789608250031'),
+(222, '9789608533448'),
+(678, '9789608723269'),
+(7734, '9789608723269'),
+(678, '9789608798212');
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `belong`
+--
+ALTER TABLE `belong`
+  ADD CONSTRAINT `belong_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `category` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `belong_ibfk_2` FOREIGN KEY (`ISBN`) REFERENCES `book` (`ISBN`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `borrower`
+--
+ALTER TABLE `borrower`
+  ADD CONSTRAINT `borrower_ibfk_1` FOREIGN KEY (`AT`) REFERENCES `person` (`AT`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `category`
+--
+ALTER TABLE `category`
+  ADD CONSTRAINT `catagory_ibfk_1` FOREIGN KEY (`HyperCategory`) REFERENCES `category` (`ID`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `lending`
+--
+ALTER TABLE `lending`
+  ADD CONSTRAINT `lending_ibfk_1` FOREIGN KEY (`librarian`) REFERENCES `librarian` (`AT`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `lending_ibfk_2` FOREIGN KEY (`Borrower`) REFERENCES `borrower` (`AT`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `librarian`
+--
+ALTER TABLE `librarian`
+  ADD CONSTRAINT `librarian_ibfk_1` FOREIGN KEY (`AT`) REFERENCES `person` (`AT`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `participate`
+--
+ALTER TABLE `participate`
+  ADD CONSTRAINT `participate_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `lending` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `participate_ibfk_2` FOREIGN KEY (`ISBN`) REFERENCES `book` (`ISBN`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `phones`
+--
+ALTER TABLE `phones`
+  ADD CONSTRAINT `phones_ibfk_1` FOREIGN KEY (`AT`) REFERENCES `person` (`AT`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `writes`
+--
+ALTER TABLE `writes`
+  ADD CONSTRAINT `writes_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `writer` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `writes_ibfk_2` FOREIGN KEY (`ISBN`) REFERENCES `book` (`ISBN`) ON DELETE CASCADE ON UPDATE CASCADE;

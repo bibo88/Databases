@@ -1,0 +1,270 @@
+drop database if exists library;
+Create database library;
+use library;
+
+create table person(
+id_card varchar(10) not null,
+lastname varchar(255) not null,
+firstname varchar(255) not null,
+birthday date not null default '0000-00-00',
+PRIMARY KEY(id_card)
+);
+
+create table author(
+lastname varchar(255) not null,
+firstname varchar(255) not null,
+nickname varchar(255) not null,
+biography longtext not null,
+ID int(11) not null auto_increment,
+PRIMARY KEY(ID)
+);
+
+
+create table borrower(
+id_card varchar(10),
+sign_up_date date not null default '0000-00-00',
+characterise varchar(20) not null,
+act_mem enum('TRUE','FALSE'),
+PRIMARY KEY(id_card),
+FOREIGN KEY(id_card) REFERENCES person(id_card)
+);
+
+
+create table employee(
+id_card varchar(10) not null,
+hiring_date date not null default '0000-00-00',
+PRIMARY KEY(id_card),
+FOREIGN KEY(id_card) REFERENCES person(id_card)
+);
+
+
+create table phones(
+id_card varchar(10) not null references person(id_card),
+phone bigint(10) not null,
+what_is_it enum('Knt','oikias','grafeiou','fax') not null,
+UNIQUE uq_ph(id_card,phone)
+);
+
+
+
+create table borrowing(
+ID int not null,
+borrowing_date datetime not null,
+returning_date datetime not null,
+borrower_id int not null references borrower(id_card),
+employee_id int not null references employee(id_card),
+PRIMARY KEY(ID)
+);
+
+
+create table book(
+ISBN int(11) not null,
+title varchar(255) default 'TITLE' not null,
+book_num int not null,
+image_Path varchar(300) default '',
+short_descr longtext not null,
+PRIMARY KEY(ISBN)
+);
+
+
+
+create table participate(
+id_borrowing int not null,
+id_book int(11) not null,
+PRIMARY KEY(id_borrowing,id_book),
+CONSTRAINT borrowing_participation 
+FOREIGN KEY(Id_borrowing) REFERENCES borrowing(ID)
+ON DELETE CASCADE ON UPDATE CASCADE,
+
+CONSTRAINT borrowing_book
+FOREIGN KEY(id_book) REFERENCES book(ISBN)
+ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+create table category(
+ID int(11) not null,
+title varchar(128) default 'TITLE' not null,
+super_category int(11) not null,
+PRIMARY KEY(ID),
+CONSTRAINT superCategory
+FOREIGN KEY(super_category) REFERENCES category(ID)
+ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+create table belong(
+id_category int(11) not null,
+id_book int(11) not null,
+PRIMARY KEY(id_category,id_book),
+CONSTRAINT category_belongs_to 
+FOREIGN KEY(id_category) REFERENCES category(ID)
+ON DELETE CASCADE ON UPDATE CASCADE,
+
+CONSTRAINT book_belongs_to
+FOREIGN KEY(id_book) REFERENCES book(ISBN)
+ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+
+
+create table writing(
+id_author int(11) not null auto_increment,
+id_booky int(11) not null,
+PRIMARY KEY(id_author,id_booky),
+CONSTRAINT author_writes 
+FOREIGN KEY(id_author) REFERENCES author(ID)
+ON DELETE CASCADE ON UPDATE CASCADE,
+
+CONSTRAINT book_is_written
+FOREIGN KEY(id_booky) REFERENCES book(ISBN)
+ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+
+
+
+INSERT INTO person(id_card,lastname,firstname,birthday) VALUES(0000000001,'kalargargis','dimitris','1989-05-18');
+INSERT INTO person(id_card,lastname,firstname,birthday) VALUES(0000000002,'Dimitriadi','Giota','1985-05-21');
+INSERT INTO person(id_card,lastname,firstname,birthday) VALUES(0000000003,'koudouris','yiannis','1968-07-11');
+INSERT INTO person(id_card,lastname,firstname,birthday) VALUES(0000000004,'papagiannis','kostas','1980-12-06');
+INSERT INTO person(id_card,lastname,firstname,birthday) VALUES(0000000005,'diathesopoulos','thananis','1977-08-20');
+INSERT INTO person(id_card,lastname,firstname,birthday) VALUES(0000000006,'lekkas','charalampos','1985-02-24');
+INSERT INTO person(id_card,lastname,firstname,birthday) VALUES(0000000007,'stefanidou','tatiana','1976-10-09');
+INSERT INTO person(id_card,lastname,firstname,birthday) VALUES(0000000008,'niklaidhs','yiannis','1989-04-29');
+INSERT INTO person(id_card,lastname,firstname,birthday) VALUES(0000000009,'tzovlas','nikos','1975-08-19');
+INSERT INTO person(id_card,lastname,firstname,birthday) VALUES(0000000010,'karas','anastasios','1980-01-18');
+
+
+
+INSERT INTO borrower(id_card,sign_up_date,characterise,act_mem) VALUES(0000000001,'2001-01-09',kathigitis','TRUE');
+INSERT INTO borrower(id_card,sign_up_date,characterise,act_mem) VALUES(0000000002,'2004-12-12','katharistria','TRUE');
+INSERT INTO borrower(id_card,sign_up_date,characterise,act_mem) VALUES(0000000003,'2000-11-27','foititis','TRUE');
+INSERT INTO borrower(id_card,sign_up_date,characterise,act_mem) VALUES(0000000004,'2008-08-09','foititis','FALSE');
+INSERT INTO borrower(id_card,sign_up_date,characterise,act_mem) VALUES(0000000005,'2005-05-29','foititis','TRUE');
+
+
+
+INSERT INTO employee(id_card,hiring_date) VALUES(0000000006,'1992-11-11');
+INSERT INTO employee(id_card,hiring_date) VALUES(0000000007,'1997-01-22');
+INSERT INTO employee(id_card,hiring_date) VALUES(0000000008,'2000-05-14');
+INSERT INTO employee(id_card,hiring_date) VALUES(0000000009,'1998-03-03');
+INSERT INTO employee(id_card,hiring_date) VALUES(0000000010,'2006-10-10');
+
+
+
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000001,'2104545956','spiti');
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000001,'6947865436','kinito');
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000001,'2109338456','ergasias');
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000001,'2104643258','fax');
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000002,'2610434641','spiti');
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000003,'2610489632','ergasias');
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000003,'2310456321','fax');
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000004,'6944632159','Kinito');
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000005,'6935689123','kinito');
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000005,'2109685357','spiti');
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000006,'6964512369','kinito');
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000006,'2101425698','spiti');
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000007,'6982424792','kinito');
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000007,'2610438353','spiti');
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000008,'6986532147','Kinito');
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000009,'2310311195,'spiti');
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000009,'2109708123,'fax');
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000009,'6935493218','Knt');
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000010,'210461325','ergasia');
+INSERT INTO phones(id_card,phone,what_is_it) VALUES(0000000010,'6969512365','Kinito');
+
+
+
+INSERT INTO borrowing(ID,borrowing_date,returning_date,borrower_id,employee_id) VALUES(1,'2000-10-21 12:15:15','2000-10-22 11:00:49', 0000000001, 0000000006);
+INSERT INTO borrowing(ID,borrowing_date,returning_date,borrower_id,employee_id) VALUES(2,'2003-02-10 12:45:25','2003-02-15 20:43:12', 0000000003, 0000000007);
+INSERT INTO borrowing(ID,borrowing_date,returning_date,borrower_id,employee_id) VALUES(3,'2004-06-24 10:06:21','2004-07-20 14:48:00', 0000000002, 0000000009);
+INSERT INTO borrowing(ID,borrowing_date,returning_date,borrower_id,employee_id) VALUES(4,'2005-01-27 19:07:00','2005-02-18 20:09:09', 0000000005, 0000000010);
+INSERT INTO borrowing(ID,borrowing_date,returning_date,borrower_id,employee_id) VALUES(5,'2005-08-03 12:17:00','2005-08-18 09:30:00', 0000000004, 0000000009);
+INSERT INTO borrowing(ID,borrowing_date,returning_date,borrower_id,employee_id) VALUES(6,'2005-12-01 17:23:59','2006-01-08 16:02:45', 0000000001, 0000000006);
+INSERT INTO borrowing(ID,borrowing_date,returning_date,borrower_id,employee_id) VALUES(7,'2006-02-29 14:25:00','2006-03-21 19:09:16', 0000000003, 0000000009);
+INSERT INTO borrowing(ID,borrowing_date,returning_date,borrower_id,employee_id) VALUES(8,'2006-09-05 15:20:08','2006-09-28 21:00:00', 0000000004, 0000000008);
+INSERT INTO borrowing(ID,borrowing_date,returning_date,borrower_id,employee_id) VALUES(9,'2006-10-30 10:12:24','2006-11-18 19:23:29', 0000000002, 0000000008);
+INSERT INTO borrowing(ID,borrowing_date,returning_date,borrower_id,employee_id) VALUES(10,'2006-11-09 11:12:45','2006-11-21 20:20:20', 0000000005, 0000000006);
+INSERT INTO borrowing(ID,borrowing_date,returning_date,borrower_id,employee_id) VALUES(11,'2007-04-14 10:10:10','2007-05-01 09:18:00', 0000000003, 0000000007);
+INSERT INTO borrowing(ID,borrowing_date,returning_date,borrower_id,employee_id) VALUES(13,'2007-10-29 08:32:00','2007-11-25 21:09:42', 0000000003, 0000000008);
+INSERT INTO borrowing(ID,borrowing_date,returning_date,borrower_id,employee_id) VALUES(14,'2007-10-30 11:19:35','2007-11-31 19:20:09', 0000000005, 0000000008);
+INSERT INTO borrowing(ID,borrowing_date,returning_date,borrower_id,employee_id) VALUES(15,'2008-12-01 20:57:55','2008-12-16 16:26:09', 0000000004, 0000000008);
+
+
+INSERT INTO book(ISBN,title,book_num,image_Path,short_descr) VALUES(10000000000, 'biblio1','1','file:///C:/Documents%20and%20Settings/user/%WE%GR%CF%75%CE%WE%CF%86%OY%QW%CE%BC%CE%G5%CE%TY%CE%B1%20%IO%89%CF%69%CE%X2%CE%B1%CF%12%CB%AC%CB%B1%KL%89/books/d323.jpg',gegegregre');
+INSERT INTO book(ISBN,title,book_num,image_Path,short_descr) VALUES(20000000000,' biblio 2','2','file:///C:/Documents%20and%20Settings/user%WE%GR%CF%75%CE%WE%CF%86%OY%QW%CE%BC%CE%G5%CE%TY%CE%B1%20%IO%89%CF%69%CE%X2%CE%B1%CF%12%CB%AC%CB%B1%KL%89/books/h7y86jpg','gregregre');
+INSERT INTO book(ISBN,title,book_num,image_Path,short_descr) VALUES(30000000000,' biblio 3','3','file:///C:/Documents%20and%20Settings/user%WE%GR%CF%75%CE%WE%CF%86%OY%QW%CE%BC%CE%G5%CE%TY%CE%B1%20%IO%89%CF%69%CE%X2%CE%B1%CF%12%CB%AC%CB%B1%KL%89/books/b111887.jpg','gyfgyutfuitf');
+INSERT INTO book(ISBN,title,book_num,image_Path,short_descr) VALUES(40000000000,' biblio 4','4','file:///C:/Documents%20and%20Settings/user%WE%GR%CF%75%CE%WE%CF%86%OY%QW%CE%BC%CE%G5%CE%TY%CE%B1%20%IO%89%CF%69%CE%X2%CE%B1%CF%12%CB%AC%CB%B1%KL%89/books/b116859.jpg','gtybgutgn7tiug');
+INSERT INTO book(ISBN,title,book_num,image_Path,short_descr) VALUES(50000000000,' biblio 5','5','file:///C:/Documents%WE%GR%CF%75%CE%WE%CF%86%OY%QW%CE%BC%CE%G5%CE%TY%CE%B1%20%IO%89%CF%69%CE%X2%CE%B1%CF%12%CB%AC%CB%B1%KL%89 books/b243DVS.jpg','gnyugiyug');
+INSERT INTO book(ISBN,title,book_num,image_Path,short_descr) VALUES(60000000000,' biblio 6','6','file:///C:/Documents%20and%20Settings/user/%WE%GR%CF%75%CE%WE%CF%86%OY%QW%CE%BC%CE%G5%CE%TY%CE%B1%20%IO%89%CF%69%CE%X2%CE%B1%CF%12%CB%AC%CB%B1%KL%89/books/b24328.jpg','yiguygig');
+INSERT INTO book(ISBN,title,book_num,image_Path,short_descr) VALUES(70000000000,' biblio 7','7','file:///C:/Documents%20and%20Settings/user%WE%GR%CF%75%CE%WE%CF%86%OY%QW%CE%BC%CE%G5%CE%TY%CE%B1%20%IO%89%CF%69%CE%X2%CE%B1%CF%12%CB%AC%CB%B1%KL%89/books/b19927.jpg','hyiuutguitg');
+INSERT INTO book(ISBN,title,book_num,image_Path,short_descr) VALUES(80000000000,' biblio 8','8','file:///C:/Documents%20and%20Settings/user%WE%GR%CF%75%CE%WE%CF%86%OY%QW%CE%BC%CE%G5%CE%TY%CE%B1%20%IO%89%CF%69%CE%X2%CE%B1%CF%12%CB%AC%CB%B1%KL%89/books/3359950.jpg','gyuinyugu');
+INSERT INTO book(ISBN,title,book_num,image_Path,short_descr) VALUES(90000000000,' biblio 9','9','file:///C:/Documents%20and%20Settings/user%WE%GR%CF%75%CE%WE%CF%86%OY%QW%CE%BC%CE%G5%CE%TY%CE%B1%20%IO%89%CF%69%CE%X2%CE%B1%CF%12%CB%AC%CB%B1%KL%89/books/vdsv.jpg','vrevere');
+INSERT INTO book(ISBN,title,book_num,image_Path,short_descr) VALUES(11000000000,' biblio 11','11','file:///C:/Documents%20and%20Settings/user%WE%GR%CF%75%CE%WE%CF%86%OY%QW%CE%BC%CE%G5%CE%TY%CE%B1%20%IO%89%CF%69%CE%X2%CE%B1%CF%12%CB%AC%CB%B1%KL%89/books/b54577.jpg','vsfvsfvs');
+INSERT INTO book(ISBN,title,book_num,image_Path,short_descr) VALUES(12000000000,' biblio 12','12','file:///C:/Documents%20and%20Settings/user%WE%GR%CF%75%CE%WE%CF%86%OY%QW%CE%BC%CE%G5%CE%TY%CE%B1%20%IO%89%CF%69%CE%X2%CE%B1%CF%12%CB%AC%CB%B1%KL%89/books/b74593.jpg','dvssvds');
+INSERT INTO book(ISBN,title,book_num,image_Path,short_descr) VALUES(13000000000,' biblio 13','13','file:///C:/Documents%20and%20Settings/user%WE%GR%CF%75%CE%WE%CF%86%OY%QW%CE%BC%CE%G5%CE%TY%CE%B1%20%IO%89%CF%69%CE%X2%CE%B1%CF%12%CB%AC%CB%B1%KL%89/books/b26400.jpg','vdsvdsvs');
+INSERT INTO book(ISBN,title,book_num,image_Path,short_descr) VALUES(14000000000,' biblio 14','14','file:///C:/Documents%20and%20Settings/user%WE%GR%CF%75%CE%WE%CF%86%OY%QW%CE%BC%CE%G5%CE%TY%CE%B1%20%IO%89%CF%69%CE%X2%CE%B1%CF%12%CB%AC%CB%B1%KL%89/books/NoBook.gif','uighoiygoy');
+INSERT INTO book(ISBN,title,book_num,image_Path,short_descr) VALUES(15000000000,' biblio 15','15','file:///C:/Documents%20and%20Settings/user%WE%GR%CF%75%CE%WE%CF%86%OY%QW%CE%BC%CE%G5%CE%TY%CE%B1%20%IO%89%CF%69%CE%X2%CE%B1%CF%12%CB%AC%CB%B1%KL%89/books/b117180.jpg','dsvsvsdv');
+INSERT INTO book(ISBN,title,book_num,image_Path,short_descr) VALUES(16000000000,' biblio 16','16','file:///C:/Documents%20and%20Settings/user%WE%GR%CF%75%CE%WE%CF%86%OY%QW%CE%BC%CE%G5%CE%TY%CE%B1%20%IO%89%CF%69%CE%X2%CE%B1%CF%12%CB%AC%CB%B1%KL%89/books/b96366.jpg',' vdsvsdsdvdsaa');
+
+
+INSERT INTO participate(id_borrowing,id_book) VALUES(1,10000000000);
+INSERT INTO participate(id_borrowing,id_book) VALUES(2,10000000000);
+INSERT INTO participate(id_borrowing,id_book) VALUES(3,20000000000);
+INSERT INTO participate(id_borrowing,id_book) VALUES(4,60000000000);
+INSERT INTO participate(id_borrowing,id_book) VALUES(5,80000000000);
+INSERT INTO participate(id_borrowing,id_book) VALUES(6,90000000000);
+INSERT INTO participate(id_borrowing,id_book) VALUES(7,70000000000);
+INSERT INTO participate(id_borrowing,id_book) VALUES(8,11000000000);
+INSERT INTO participate(id_borrowing,id_book) VALUES(9,13000000000);
+INSERT INTO participate(id_borrowing,id_book) VALUES(10, 50000000000);
+INSERT INTO participate(id_borrowing,id_book) VALUES(11,90000000000);
+INSERT INTO participate(id_borrowing,id_book) VALUES(12,70000000000);
+INSERT INTO participate(id_borrowing,id_book) VALUES(13,12000000000);
+INSERT INTO participate(id_borrowing,id_book) VALUES(14,50000000000);
+INSERT INTO participate(id_borrowing,id_book) VALUES(15,40000000000);
+
+
+
+INSERT INTO author(lastname,firstname,nickname,biography,ID) VALUES('grgrge','qwerqwt','gfegr','lalamalalalallala',22222222222);
+INSERT INTO author(lastname,firstname,nickname,biography,ID) VALUES('vfdbdw','Pfdbdb','Val','jhgdyugdjhsbuyu',33333333333);
+INSERT INTO author(lastname,firstname,nickname,biography,ID) VALUES('svdvsdvos','Abdfbddis','oddrbrrs','uygdgdkhgdoytwdoyh',44444444444);
+INSERT INTO author(lastname,firstname,nickname,biography,ID) VALUES('brdsbrdbs','Krdbdrbis','natha','hgfyuqgwrbxkueygtiqw',55555555555);
+INSERT INTO author(lastname,firstname,nickname,biography,ID) VALUES('esvrbre','Bmyumyumt,'nid','kgbahgfkhjgiyghbscc',66666666666);
+INSERT INTO author(lastname,firstname,nickname,biography,ID) VALUES('ntntntyn','mtmttni','tmtmtmta','ygcrhjgheseefiojhlhdg',77777777777);
+INSERT INTO author(lastname,firstname,nickname,biography,ID) VALUES('Entyntntntyos','ntntyntnterbs','ntntymos','yerfcgrfjh ygrfhbl',88888888888);
+INSERT INTO author(lastname,firstname,nickname,biography,ID) VALUES('tbrbrtbrt',tbrtbrtbrt',rbrtbrtbtra','hjegri ywgfhdvb  aterfkjgytf',99999999999);
+INSERT INTO author(lastname,firstname,nickname,biography,ID) VALUES('brbrtny','lrbtevbwi','btrbrnry','jheg hbfkhgfkgvsckhg',00000011000);
+INSERT INTO author(lastname,firstname,nickname,biography,ID) VALUES('nrberwevwte','wvewthtn','vwrrtberl','uygrf hjfjgvlhgo uysgv jytf',00000012000);
+
+
+INSERT INTO writing(id_author,id_booky) VALUES(11111111111,10000000000);
+INSERT INTO writing(id_author,id_booky) VALUES(22222222222,2000000000);
+INSERT INTO writing(id_author,id_booky) VALUES(33333333333,3000000000);
+INSERT INTO writing(id_author,id_booky) VALUES(44444444444,4000000000);
+INSERT INTO writing(id_author,id_booky) VALUES(55555555555,5000000000);
+INSERT INTO writing(id_author,id_booky) VALUES(66666666666,6000000000);
+INSERT INTO writing(id_author,id_booky) VALUES(77777777777,7000000000);
+INSERT INTO writing(id_author,id_booky) VALUES(88888888888,8000000000);
+INSERT INTO writing(id_author,id_booky) VALUES(99999999999,9000000000);
+INSERT INTO writing(id_author,id_booky) VALUES(00000011000,11000000000);
+INSERT INTO writing(id_author,id_booky) VALUES(00000012000,12000000000);
+INSERT INTO writing(id_author,id_booky) VALUES(11111111111,13000000000);
+INSERT INTO writing(id_author,id_booky) VALUES(44444444444,14000000000);
+INSERT INTO writing(id_author,id_booky) VALUES(55555555555,15000000000);
+
+INSERT INTO category(ID,title,super_category) VALUES(12345678987,'mathematics', 00110000010);
+INSERT INTO category(ID,title,super_category) VALUES(00110000010,'science', 00110000010);
+INSERT INTO category(ID,title,super_category) VALUES(12345678945,'fysiki', 00110000010);
+INSERT INTO category(ID,title,super_category) VALUES(12345678945,'xhmeia', 00110000010);
+INSERT INTO category(ID,title,super_category) VALUES(00222222220,'politismos',00222222220);
+INSERT INTO category(ID,title,super_category) VALUES(98765432178,'ellada', 00222222220);
+INSERT INTO category(ID,title,super_category) VALUES(98765432145,'spain', 00222222220);
+INSERT INTO category(ID,title,super_category) VALUES(98765432112,'italia', 00222222220);
+INSERT INTO category(ID,title,super_category) VALUES(00333333330,'mousikh',00333333330);
+INSERT INTO category(ID,title,super_category) VALUES(45678912365,'rock', 00333333330);
+INSERT INTO category(ID,title,super_category) VALUES(45678912398,'jazz', 00333333330);
+INSERT INTO category(ID,title,super_category) VALUES(45678912332,'blues', 00333333330);

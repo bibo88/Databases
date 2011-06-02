@@ -1,0 +1,75 @@
+1.select NumOfcopies from book where Title='Mathimatiki Analisi';
+
+--------------------------------------------------------
+
+2.select count(Borrower) as "fores" from lending where Borrower in (select AT from person  where name like "Aristeidis" AND Surname like "Fragkoulis");
+
+select count(Borrower) as "fores" from lending inner join person on lending.borrower=person.AT where name like "Aristeidis" AND Surname like "Fragkoulis";
+
+--------------------------------------------------------
+
+3.select Title,Count(belong.ID) as numberofbookspercategory from category inner join belong on belong.ID=category.ID group by category.ID;
+
+--------------------------------------------------------
+
+4.select COUNT(HyperCategory) as amesesupokathgories from category where HyperCategory in (select HyperCategory from category where HyperCategory=3234);
+
+--------------------------------------------------------
+
+5.select Title from category where ID in (select ID from belong where ISBN in(select ISBN from book where Title='The Tragedy of Macbeth'));
+
+--------------------------------------------------------
+
+6.select Name,Surname,count(writes.ID) as mostwrites from writer inner join writes on writes.ID=writer.ID group by writes.ID order by count(writes.ID) Desc limit 0,1;
+
+--------------------------------------------------------
+
+7.select count(ISBN) as numbersofbooks from book where Publisher='OXFORD UNIVERSITY PRESS'AND ISBN in (select ISBN from writes where ID in (select ID from writer where Name='Robert ' and Surname='Dallek '));
+
+--------------------------------------------------------
+
+8.select AVG(average) from (select count(writer.id) as average from writes inner join writer on writes.ID=writer.ID group by ISBN) as average_per_book;
+
+--------------------------------------------------------
+
+9. Grant select on AMxxxx2.* to 'User3929'@'localhost';
+Grant insert,update on AMxxxx2.lending  to 'User3929'@'localhost'; 
+
+--------------------------------------------------------
+
+10.select Name,Surname from person where AT in(select borrower from lending where borrower<>librarian and ID in(select ID from participate group by ID having count(*)=2));
+
+--------------------------------------------------------
+
+11.select Name,Surname,count(lending.librarian) as Timesofhelping from person inner join lending on lending.librarian=person.AT group by lending.librarian order by count(lending.librarian) Desc limit 0,3;
+
+--------------------------------------------------------
+
+12. select person.name,person.surname,writer.name,writer.surname from lending inner join participate on participate.id=lending.id inner join writes on writes.ISBN=participate.ISBN inner join person on person.AT=lending.borrower inner join writer on writer.id=writes.id group by borrower order by count(participate.ISBN) Desc;
+
+     VOHTHITIKO
+select person.name,person.surname,writer.name,writer.surname from lending inner join participate on participate.id=lending.id inner join writes on writes.ISBN=participate.ISBN inner join person on person.AT=lending.borrower inner join writer on writer.id=writes.id order by borrower;
+
+--------------------------------------------------------
+
+13.select writer.name,writer.surname from writes inner join writer on writer.id=writes.id  group by writes.id having count(writes.id)=2;
+
+   VOHTHITIKO
+select writer.name,writer.surname,ISBN,count(writes.id) from writes inner join writer on writer.id=writes.id  group by writer.id;
+
+--------------------------------------------------------
+
+14.Select title from category where id in  (Select HyperCategory from category where id= 116621) 
+union Select title from category Where id in (Select HyperCategory from category where id in  (Select HyperCategory from category where id= 116621)) union Select title from category Where id in (Select HyperCategory from category where id in (Select HyperCategory from category where id in (Select HyperCategory from category where id= 116621))); select Title from category where ID in (select ID from belong where ISBN in(select ISBN from book where Title='Mia zwi Duo zwes'));
+
+--------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
